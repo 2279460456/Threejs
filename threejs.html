@@ -29,10 +29,16 @@
       const geometry = new THREE.BoxGeometry( 1, 1, 1 );
       const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
       const cube = new THREE.Mesh( geometry, material );
+
+      // AxesHelper：辅助观察的坐标系
+      const axesHelper = new THREE.AxesHelper(4);
+
+      scene.add(axesHelper);
       scene.add( cube );
 
       // 正方体默认放置在相机处（与相机重合），所以要提升相机的位置，才能看到
-      camera.position.z = 5;
+      camera.position.set(0,0,5);
+      camera.lookAt(0,0,0)
 
       /** 渲染函数 */
       function animate() {
