@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>threejs</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <div>123</div>
+    <script type="module">
+      import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+
+        // 创建场景
+      const scene = new THREE.Scene();
+      // 创建相机
+      const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+      // 创建渲染器，设置显示大小，并将其添加到body上
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      // 创建正方体并且添加到场景
+      const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+      const cube = new THREE.Mesh( geometry, material );
+
+      // AxesHelper：辅助观察的坐标系
+      const axesHelper = new THREE.AxesHelper(4);
+
+      scene.add(axesHelper);
+      scene.add( cube );
+
+      // 正方体默认放置在相机处（与相机重合），所以要提升相机的位置，才能看到
+      camera.position.set(0,0,5);
+      camera.lookAt(0,0,0)
+
+      /** 渲染函数 */
+      function animate() {
+        // 每次屏幕刷新时会调用参数中的函数
+        requestAnimationFrame( animate );
+        // 旋转动画
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        // 在场景中渲染
+        renderer.render( scene, camera );
+      };
+      animate();
+    </script>
 </body>
 </html>
